@@ -1,23 +1,26 @@
 const express = require('express')
 const path = require('path')
 const exphbs = require('express-handlebars')
+const morgan = require('morgan')
 
 // Inicializations
 const app = express()
 
+const hbs = exphbs.create({
+    partialsDir: ['views/partials'],
+})
 
 //Settings
-app.set('port', process.env.PORT || 4000)
-app.set('views', path.join(__dirname, 'views'))
-const hbs = exphbs.create({
-    partialsDir: ['views/partials/layouts']
-})
-app.engine('handlebars', hbs.engine)
+app.set('port', process.env.PORT || 4000);
+app.set('views', path.join(__dirname, 'views'));
+app.engine('handlebars', hbs.engine);
 app.set('view engine', 'handlebars')
 
 
+
 //Middlewares
-app.use(express.urlencoded({extended: false}))
+app.use(morgan('dev'))
+app.use(express.urlencoded({extended: true}))
 
 //Global Variables
 app.use(express.static(path.join(__dirname, 'public')))

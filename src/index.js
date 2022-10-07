@@ -1,9 +1,9 @@
-require('dotenv').config()
-const app = require('./server')
-require('./database')
+require('dotenv').config();
 
-app.listen(app.get('port'), () =>{
-    console.log('Servidor conectado no http://localhost:4000')
+const app = require('./server');
+require('./database');
 
+
+app.listen(app.get('port'), () => {
+    console.log('Conectado no http://localhost:'+app.get('port'))
 })
-    

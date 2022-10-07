@@ -1,9 +1,7 @@
-const { router } = require("../server")
-
 const notesCtrl = {}
 
 notesCtrl.renderNoteForm = (req, res) => {
-    res.send('Notes Add')
+    res.render('notes/new-note')
 }
 notesCtrl.createNewNote = (req, res) => {
     res.send('Create new note')
