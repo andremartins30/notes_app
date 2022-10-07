@@ -1,6 +1,8 @@
 const express = require('express')
 const path = require('path')
+const _handlebars = require('handlebars');
 const exphbs = require('express-handlebars')
+const {allowInsecurePrototypeAccess} = require('@handlebars/allow-prototype-access');
 const morgan = require('morgan')
 
 // Inicializations
@@ -13,13 +15,14 @@ const hbs = exphbs.create({
 //Settings
 app.set('port', process.env.PORT || 4000);
 app.set('views', path.join(__dirname, 'views'));
-app.engine('handlebars', hbs.engine);
+app.engine('handlebars', hbs.engine)
+
 app.set('view engine', 'handlebars')
 
 
 
 //Middlewares
-app.use(morgan('dev'))
+// app.use(morgan('dev'))
 app.use(express.urlencoded({extended: true}))
 
 //Global Variables

@@ -1,4 +1,19 @@
-<h1>All notes</h1>
-<pre>
-    {{notes}}
-</pre>
+<h1>All Notes</h1>
+
+<a href="/notes/add">Criar nova nota</a>
+<div class="row">
+    {{#each notes}}
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title d-flex justify-content-between align-itens-center">
+                        {{title}}<a href="/notes/edit/{{_id}}"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                    </h4>
+                    <p>{{description}}</p>
+                </div>
+            </div>
+        </div>
+    {{/each}}
+</div>
+
+

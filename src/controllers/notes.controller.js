@@ -10,12 +10,11 @@ notesCtrl.createNewNote = async (req, res) => {
     const newNote = new Note({title, description})
     await newNote.save()
 
-
     res.redirect('/notes')
 }
 
 notesCtrl.renderNotes = async (req, res) => {
-    const notes = await Note.find()
+    const notes = await Note.find().lean()
     res.render('notes/all-notes', { notes })
 }
 
