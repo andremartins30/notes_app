@@ -6,6 +6,7 @@
 
         <div class="card-body">
             <form action="/notes/edit/{{note._id}}?_method=PUT" method="POST">
+                <input type="hidden" name="_method" value="{{note._id}}">
                 <div class="form-group">
                     <input type="text" name="title" class="form-control" value="{{note.title}}">
                 </div>
