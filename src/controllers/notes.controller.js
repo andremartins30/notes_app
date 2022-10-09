@@ -34,7 +34,7 @@ notesCtrl.updateNote = async (req, res) => {
     const note = {title, description}
 
 
-    await Note.findByIdAndUpdate(id, {note});
+    await Note.updateOne({_id:id}, note);
     
     console.log(note)
     res.redirect('/notes');
