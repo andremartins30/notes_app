@@ -1,9 +1,11 @@
 const express = require('express')
 const path = require('path')
-const _handlebars = require('handlebars');
+
 const exphbs = require('express-handlebars')
-const {allowInsecurePrototypeAccess} = require('@handlebars/allow-prototype-access');
+
 const morgan = require('morgan')
+
+const  methodOverride = require('method-override')
 
 // Inicializations
 const app = express()
@@ -22,8 +24,9 @@ app.set('view engine', 'handlebars')
 
 
 //Middlewares
-// app.use(morgan('dev'))
+app.use(morgan('dev'))
 app.use(express.urlencoded({extended: true}))
+app.use(methodOverride('_method'))
 
 //Global Variables
 app.use(express.static(path.join(__dirname, 'public')))
