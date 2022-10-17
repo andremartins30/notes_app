@@ -11,7 +11,7 @@ const  methodOverride = require('method-override')
 const app = express()
 
 const hbs = exphbs.create({
-    partialsDir: ['views/partials'],
+    partialsDir: ['views'],
 })
 
 //Settings
