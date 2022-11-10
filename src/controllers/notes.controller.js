@@ -9,7 +9,7 @@ notesCtrl.createNewNote = async (req, res) => {
     const {title, description} = req.body
     const newNote = new Note({title, description})
     await newNote.save()
-
+    req.flash('success_msg', 'Note Added Successfully')
     res.redirect('/notes')
 }
 
