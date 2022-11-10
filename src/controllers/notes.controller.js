@@ -37,6 +37,7 @@ notesCtrl.updateNote = async (req, res) => {
     await Note.updateOne({_id:id}, note);
     
     console.log(note)
+    req.flash('success_msg', 'Note Updated Successfully');
     res.redirect('/notes');
 }
 
@@ -46,6 +47,7 @@ notesCtrl.deleteNote = async (req, res) => {
 
     await Note.findByIdAndDelete(id)
 
+    req.flash('success_msg', 'Note Deleted Successfully')
     res.redirect('/notes')
 }
 module.exports = notesCtrl

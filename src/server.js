@@ -11,17 +11,8 @@ const session = require('express-session')
 const app = express()
 initHandlebars(app)
 
-// const hbs = exphbs.create({
-//     partialsDir: '/partials',
-//     layoutsDir: '/layouts'
-// })
-
-//Settings
 app.set('port', process.env.PORT || 4000);
-// app.set('views', path.join(__dirname, 'views'));
-// app.engine('handlebars', hbs.engine)
 
-// app.set('view engine', 'handlebars')
 
 
 //Middlewares
@@ -39,7 +30,7 @@ app.use(flash())
 
 //Global Variables
 app.use((req, res, next) => {
-    res.locals.success_msg = req.flash('Success_msg')
+    res.locals.success_msg = req.flash('success_msg')
     next()
 })
 
