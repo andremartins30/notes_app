@@ -5,7 +5,19 @@ usersCtrl.renderSignUpForm = (req, res) => {
 }
 
 usersCtrl.signup = (req, res) => {
-    res.send('signup')
+    const errors = []
+    const {name, email, password, passwordCheck} = req.body
+    if(password != passwordCheck){
+        errors.push({text: 'Passwords do not match'})
+    }
+    if(password.length < 4){
+        errors.push({text: 'Passwords must be least 4 characters'})
+    }
+    if(errors.length != 0){
+        res.render('users/signup', {msg: 'Tem erro'})
+    } else {
+        res.redirect('/users/login')
+    }
 }
 
 usersCtrl.renderLogInForm = (req, res) => {
