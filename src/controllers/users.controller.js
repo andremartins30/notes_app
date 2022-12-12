@@ -1,10 +1,12 @@
 const usersCtrl = {}
+const bcrypt = require('bcrypt')
+const User = require('../models/User')
 
 usersCtrl.renderSignUpForm = (req, res) => {
     res.render('users/signup')
 }
 
-usersCtrl.signup = (req, res) => {
+usersCtrl.signup = async (req, res) => {
     const errors = []
     const {name, email, password, passwordCheck} = req.body
     if(password != passwordCheck){
@@ -14,9 +16,20 @@ usersCtrl.signup = (req, res) => {
         errors.push({text: 'Passwords must be least 4 characters'})
     }
     if(errors.length != 0){
-        res.render('users/signup', {msg: 'Tem erro'})
+        res.render('users/signup', {errors})
     } else {
-        res.redirect('/users/login')
+        const emailUser = await User.findOne({email})
+        if(emailUser){
+            req.flash('error_msg', 'E-mail is already in use.')
+            res.redirect('/users/signup')
+        } else {
+            const newUser = new User({name, email, password})
+            // newUser.password = await newUser.hashPassword(password)
+            await newUser.save()
+            req.flash('success_msg', 'You are registered')
+            res.redirect('/users/login')
+        }
+        
     }
 }
 
