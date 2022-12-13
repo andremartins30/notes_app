@@ -1,7 +1,9 @@
 const usersCtrl = {}
 
 const passport = require('passport')
-const User = require('../models/User')
+const logout = require('express-passport-logout');
+const User = require('../models/User');
+const { nextTick } = require('process');
 
 usersCtrl.renderSignUpForm = (req, res) => {
     res.render('users/signup')
@@ -47,10 +49,14 @@ usersCtrl.login = passport.authenticate('local', {
     failureFlash: true
 })
 
-usersCtrl.logout = (req, res) => {
+usersCtrl.logout = (req, res, next) => {
     // res.send('logout')
-    req.logout()
-    req.flash('success_msg', 'You are logged out now.')
-    res.redirect('/users/login')
+    req.logout(function(err){
+        if(err){
+            return next(err)
+        }
+        req.flash('success_msg', 'You are logged out now.')
+        res.redirect('/users/login')
+    })
 }
 module.exports = usersCtrl;

@@ -15,6 +15,7 @@ notesCtrl.createNewNote = async (req, res) => {
 
 notesCtrl.renderNotes = async (req, res) => {
     const notes = await Note.find().lean()
+    console.log(req.user)
     res.render('notes/all-notes', { notes })
 }
 
