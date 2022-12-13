@@ -1,5 +1,6 @@
 const usersCtrl = {}
-const bcrypt = require('bcrypt')
+
+const passport = require('passport')
 const User = require('../models/User')
 
 usersCtrl.renderSignUpForm = (req, res) => {
@@ -16,7 +17,7 @@ usersCtrl.signup = async (req, res) => {
         errors.push({text: 'Passwords must be least 4 characters'})
     }
     if(errors.length != 0){
-        res.render('users/signup', {errors})
+        res.render('users/signup', {errors, name, email})
     } else {
         const emailUser = await User.findOne({email})
         if(emailUser){
@@ -24,12 +25,11 @@ usersCtrl.signup = async (req, res) => {
             res.redirect('/users/signup')
         } else {
             const newUser = new User({name, email, password})
-            // newUser.password = await newUser.hashPassword(password)
+            newUser.password = await newUser.encryptPassword(password)
             await newUser.save()
             req.flash('success_msg', 'You are registered')
             res.redirect('/users/login')
         }
-        
     }
 }
 
@@ -37,11 +37,20 @@ usersCtrl.renderLogInForm = (req, res) => {
     res.render('users/login')
 }
 
-usersCtrl.login = (req, res) => {
-    res.send('login')
-}
+// usersCtrl.login = (req, res) => {
+//     res.send('login')
+// }
+
+usersCtrl.login = passport.authenticate('local', {
+    failureRedirect: '/users/login',
+    successRedirect: '/notes',
+    failureFlash: true
+})
 
 usersCtrl.logout = (req, res) => {
-    res.send('logout')
+    // res.send('logout')
+    req.logout()
+    req.flash('success_msg', 'You are logged out now.')
+    res.redirect('/users/login')
 }
 module.exports = usersCtrl;

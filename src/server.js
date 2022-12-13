@@ -6,9 +6,12 @@ const  methodOverride = require('method-override')
 const flash = require('connect-flash')
 const session = require('express-session')
 
+const passport =  require('passport')
+
 
 // Inicializations
 const app = express()
+require('./config/passport')
 initHandlebars(app)
 
 app.set('port', process.env.PORT || 4000);
@@ -27,6 +30,8 @@ app.use(
     })
 )
 app.use(flash())
+app.use(passport.initialize())
+app.use(passport.session())
 
 //Global Variables
 app.use((req, res, next) => {
